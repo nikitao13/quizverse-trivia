@@ -1,0 +1,31 @@
+@use '../../../sass/variables' as v;
+
+.leaderboard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #1a1a1a;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
+  user-select: none;
+
+  .leaderboardHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: v.$font-gold;
+  }
+
+  .individualScore {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+  }
+
+  .score {
+    color: v.$font-green;
+    font-weight: 600;
+  }
+}

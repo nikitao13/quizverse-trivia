@@ -1,42 +1,39 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import GamePanel from './GamePanel/GamePanel';
 import classes from './Trivia.module.scss';
 import SidePanel from './SidePanel/SidePanel';
-
-interface GameSettings {
-  difficulty: string;
-  category: string;
-  username: string;
-}
-
-const defaultSettings: GameSettings = {
-  difficulty: '',
-  category: '',
-  username: '',
-};
+import { GameSettingsContext } from '../../context/GameSettingsContext';
 
 const Trivia = () => {
-  const [gameSettings, setGameSettings] = useState<GameSettings>(() => {
-    const savedSettings = localStorage.getItem('gameSettings');
-    return savedSettings ? JSON.parse(savedSettings) : defaultSettings;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('gameSettings', JSON.stringify(gameSettings));
-  }, [gameSettings]);
-
+  const { gameStarted } = useContext(GameSettingsContext);
   return (
     <main className={classes.main}>
-      <SidePanel
-        gameSettings={gameSettings}
-        setGameSettings={setGameSettings}
-      />
+      <SidePanel />
       <section className={classes.gameContainer}>
         <h2>trivia</h2>
-        {gameSettings && <GamePanel gameSettings={gameSettings} />}
+        {gameStarted && <GamePanel />}
       </section>
     </main>
   );
 };
 
 export default Trivia;
+
+// const gameData = {
+//   username: 'nikitao13',
+//   date: '2023-10-01',
+//   gameDetails: {
+//     category: 'sports',
+//     difficulty: 'easy',
+//     score: 10,
+//     questions: [
+//       {
+//         question: 'What is the capital of France?',
+//         options: ['Paris', 'London', 'Berlin', 'Madrid'],
+//         correctAnswer: 'Paris',
+//         userAnswer: 'Paris',
+//         isCorrect: true,
+//       },
+//     ],
+//   },
+// };

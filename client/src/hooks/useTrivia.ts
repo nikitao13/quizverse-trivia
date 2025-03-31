@@ -19,13 +19,13 @@ interface GameSettings {
   username: string;
 }
 
-export const useTrivia = (gameSettings: GameSettings) => {
+export const useTrivia = (gameSettings: GameSettings, enabled: boolean) => {
   const { difficulty, category } = gameSettings;
 
   return useQuery({
     queryKey: ['trivia', gameSettings.difficulty, gameSettings.category],
     queryFn: fetchTrivia,
-    enabled: difficulty !== '' && category !== '',
+    enabled: enabled && difficulty !== '' && category !== '',
     retry: 1,
     retryDelay: 5000,
     staleTime: Infinity,

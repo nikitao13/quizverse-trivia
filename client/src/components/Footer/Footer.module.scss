@@ -1,8 +1,30 @@
+@use '../../sass/variables' as v;
+
 .footer {
-  padding: 1rem;
-  background-color: #1a1a1a;
+  padding: 1rem 1rem 1rem 1.25rem;
+  background-color: v.$bg-dark;
   width: 100%;
   display: flex;
   align-items: center;
+}
+
+.icons {
+  display: flex;
   gap: 0.75rem;
+  align-items: center;
+}
+
+.link {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.25s ease-in-out;
+  height: max-content;
+
+  &:visited {
+    color: inherit;
+  }
+
+  &:hover {
+    color: v.$font-green;
+  }
 }

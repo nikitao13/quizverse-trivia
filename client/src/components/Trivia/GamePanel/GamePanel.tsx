@@ -1,17 +1,14 @@
+import { useContext } from 'react';
 import classes from './GamePanel.module.scss';
 import { useTrivia } from '../../../hooks/useTrivia';
+import { GameSettingsContext } from '../../../context/GameSettingsContext';
+import Loader from '../../Loader/Loader';
 
-interface GamePanelProps {
-  gameSettings: {
-    difficulty: string;
-    category: string;
-    username: string;
-  };
-}
+const GamePanel = () => {
+  const { gameSettings, gameStarted } = useContext(GameSettingsContext);
+  const { data, isSuccess, isLoading } = useTrivia(gameSettings, gameStarted);
 
-const GamePanel = ({ gameSettings }: GamePanelProps) => {
-  const { data, isSuccess, isLoading } = useTrivia(gameSettings);
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loader />;
   if (isSuccess) console.log(data.results);
 
   return (
@@ -20,4 +17,5 @@ const GamePanel = ({ gameSettings }: GamePanelProps) => {
     </section>
   );
 };
+
 export default GamePanel;

@@ -1,40 +1,41 @@
+import { useContext } from 'react';
+import { GameSettingsContext } from '../../../context/GameSettingsContext';
+import Leaderboard from '../Leaderboard/Leaderboard';
 import classes from './SidePanel.module.scss';
 import { IoMdSettings } from 'react-icons/io';
 
-interface SidePanelProps {
-  gameSettings: {
-    difficulty: string;
-    category: string;
-    username: string;
-  };
-  setGameSettings: (settings: {
-    difficulty: string;
-    category: string;
-    username: string;
-  }) => void;
-}
+const SidePanel = () => {
+  const { gameSettings, setGameSettings, gameStarted, setGameStarted } =
+    useContext(GameSettingsContext);
 
-const SidePanel = ({ gameSettings, setGameSettings }: SidePanelProps) => {
+  const isReady = gameSettings.difficulty && gameSettings.category;
+
   return (
     <aside className={classes.sidePanel}>
+      <Leaderboard />
       <div className={classes.settingsHeader}>
-        <p>user settings</p>
+        <p>game settings</p>
         <IoMdSettings className={classes.settingsLogo} />
       </div>
 
       <input
+        disabled={gameStarted}
         type="text"
         placeholder="username"
         className={classes.input}
         value={gameSettings.username}
-        onChange={(e) =>
-          setGameSettings({ ...gameSettings, username: e.target.value })
-        }
+        onChange={(e) => {
+          const inputValue = e.target.value;
+          const newUsername =
+            inputValue.length > 13 ? inputValue.slice(0, 13) : inputValue;
+          setGameSettings({ ...gameSettings, username: newUsername });
+        }}
       />
 
       <div className={classes.categories}>
-        <p>categories</p>
+        <p>category</p>
         <select
+          disabled={gameStarted}
           value={gameSettings.category}
           onChange={(e) =>
             setGameSettings({ ...gameSettings, category: e.target.value })
@@ -56,6 +57,7 @@ const SidePanel = ({ gameSettings, setGameSettings }: SidePanelProps) => {
       <div className={classes.difficultyButtons}>
         <p>difficulty</p>
         <button
+          disabled={gameStarted}
           className={gameSettings.difficulty === 'easy' ? classes.active : ''}
           onClick={() =>
             setGameSettings({ ...gameSettings, difficulty: 'easy' })
@@ -64,6 +66,7 @@ const SidePanel = ({ gameSettings, setGameSettings }: SidePanelProps) => {
           easy
         </button>
         <button
+          disabled={gameStarted}
           className={gameSettings.difficulty === 'medium' ? classes.active : ''}
           onClick={() =>
             setGameSettings({ ...gameSettings, difficulty: 'medium' })
@@ -72,6 +75,7 @@ const SidePanel = ({ gameSettings, setGameSettings }: SidePanelProps) => {
           medium
         </button>
         <button
+          disabled={gameStarted}
           className={gameSettings.difficulty === 'hard' ? classes.active : ''}
           onClick={() =>
             setGameSettings({ ...gameSettings, difficulty: 'hard' })
@@ -80,6 +84,16 @@ const SidePanel = ({ gameSettings, setGameSettings }: SidePanelProps) => {
           hard
         </button>
       </div>
+
+      <button
+        className={classes.start}
+        disabled={!isReady}
+        // toggle for testing! uncomment when there is a setGameStarted(false) function
+        onClick={() => setGameStarted((prev: boolean) => !prev)}
+        // onClick={() => setGameStarted(true)}
+      >
+        start
+      </button>
     </aside>
   );
 };

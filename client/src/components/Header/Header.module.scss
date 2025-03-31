@@ -1,8 +1,11 @@
+@use '../../sass/variables' as v;
+
 .header {
   padding: 1rem;
-  background-color: #1a1a1a;
+  background-color: v.$bg-dark;
   width: 100%;
   letter-spacing: 0.075rem;
+  user-select: none;
 }
 
 .logo {
