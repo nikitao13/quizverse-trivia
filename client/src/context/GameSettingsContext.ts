@@ -6,14 +6,29 @@ export interface GameSettings {
   username: string;
 }
 
+export interface Results {
+  username: string;
+  date: string;
+  category: string;
+  difficulty: string;
+  score: number;
+  questions: Array<{
+    id: number;
+    question: string;
+    options: string[];
+    correctAnswer: string;
+    userAnswer: string;
+    isCorrect: boolean;
+  }>;
+}
+
 export interface GameSettingsContextProps {
   gameSettings: GameSettings;
   setGameSettings: (settings: GameSettings) => void;
   gameStarted: boolean;
-  // commented below for testing! uncomment when there is a setGameStarted(false) function
-  // setGameStarted: (started: boolean) => void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  setGameStarted: any;
+  setGameStarted: (started: boolean) => void;
+  lastGameResult: Results | null;
+  setLastGameResult: (result: Results) => void;
 }
 
 const defaultSettings: GameSettings = {
@@ -27,4 +42,6 @@ export const GameSettingsContext = createContext<GameSettingsContextProps>({
   setGameSettings: () => {},
   gameStarted: false,
   setGameStarted: () => {},
+  lastGameResult: null,
+  setLastGameResult: () => {},
 });

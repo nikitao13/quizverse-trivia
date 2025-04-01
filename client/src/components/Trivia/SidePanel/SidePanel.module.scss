@@ -60,6 +60,13 @@
   }
 }
 
+.pointsMsg {
+  margin-top: 0.5rem;
+  font-size: 12px;
+  text-align: center;
+  color: v.$font-gold;
+}
+
 .categories {
   margin-top: 0.5rem;
 
@@ -84,8 +91,10 @@
   background-color: v.$font-green;
   font-weight: 600;
   border: 1px solid transparent;
-  transition: opacity 0.25s ease-in-out, border 0.15s ease-in-out, color 0.15s ease-in-out;
+  transition: opacity 0.25s ease-in-out, border 0.15s ease-in-out,
+    color 0.15s ease-in-out;
   padding: 0.5rem;
+  font-size: 1.15rem;
 
   &:hover {
     opacity: 0.8;
@@ -93,7 +102,28 @@
   }
 
   &:active {
-   color: v.$font-gold;
-   border: 1px solid transparent;
+    color: v.$font-gold;
+    border: 1px solid transparent;
   }
 }
+
+// .history {
+//   background-color: v.$font-gold;
+//   font-weight: 600;
+//   border: 1px solid transparent;
+//   transition: opacity 0.25s ease-in-out, border 0.15s ease-in-out,
+//     color 0.15s ease-in-out;
+//   padding: 0.5rem;
+//   font-size: 1.15rem;
+//   margin-top: 0.25rem;
+
+//   &:hover {
+//     opacity: 0.8;
+//     border: 1px solid v.$bg-medium;
+//   }
+
+//   &:active {
+//     color: v.$font-gold;
+//     border: 1px solid transparent;
+//   }
+// }

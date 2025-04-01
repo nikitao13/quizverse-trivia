@@ -83,14 +83,15 @@ const SidePanel = () => {
         >
           hard
         </button>
+        <p className={classes.pointsMsg}>
+          earn more points with higher difficulty!
+        </p>
       </div>
 
       <button
         className={classes.start}
         disabled={!isReady}
-        // toggle for testing! uncomment when there is a setGameStarted(false) function
-        onClick={() => setGameStarted((prev: boolean) => !prev)}
-        // onClick={() => setGameStarted(true)}
+        onClick={() => setGameStarted(true)}
       >
         start
       </button>

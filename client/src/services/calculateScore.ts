@@ -2,7 +2,7 @@ const roundToHalfDecimal = (num: number) => {
   return Math.round(num * 2) / 2;
 };
 
-const calculateScore = (difficulty: string, correctAnswers: number) => {
+export const calculateScore = (difficulty: string, correctAnswers: number) => {
   let basePoints = 0;
   let bonusMultiplier = 1;
 
@@ -31,5 +31,3 @@ const calculateScore = (difficulty: string, correctAnswers: number) => {
 
   return roundToHalfDecimal(score);
 };
-
-export default calculateScore;

@@ -10,7 +10,6 @@ const Trivia = () => {
     <main className={classes.main}>
       <SidePanel />
       <section className={classes.gameContainer}>
-        <h2>trivia</h2>
         {gameStarted && <GamePanel />}
       </section>
     </main>
@@ -18,22 +17,3 @@ const Trivia = () => {
 };
 
 export default Trivia;
-
-// const gameData = {
-//   username: 'nikitao13',
-//   date: '2023-10-01',
-//   gameDetails: {
-//     category: 'sports',
-//     difficulty: 'easy',
-//     score: 10,
-//     questions: [
-//       {
-//         question: 'What is the capital of France?',
-//         options: ['Paris', 'London', 'Berlin', 'Madrid'],
-//         correctAnswer: 'Paris',
-//         userAnswer: 'Paris',
-//         isCorrect: true,
-//       },
-//     ],
-//   },
-// };

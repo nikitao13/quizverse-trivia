@@ -1,5 +1,9 @@
 import { useState, useEffect, ReactNode } from 'react';
-import { GameSettingsContext, GameSettings } from './GameSettingsContext';
+import {
+  GameSettingsContext,
+  GameSettings,
+  Results,
+} from './GameSettingsContext';
 
 interface GameSettingsProviderProps {
   children: ReactNode;
@@ -20,6 +24,7 @@ export const GameSettingsProvider = ({
   });
 
   const [gameStarted, setGameStarted] = useState(false);
+  const [lastGameResult, setLastGameResult] = useState<Results | null>(null);
 
   useEffect(() => {
     localStorage.setItem('gameSettings', JSON.stringify(gameSettings));
@@ -27,7 +32,14 @@ export const GameSettingsProvider = ({
 
   return (
     <GameSettingsContext.Provider
-      value={{ gameSettings, setGameSettings, gameStarted, setGameStarted }}
+      value={{
+        gameSettings,
+        setGameSettings,
+        gameStarted,
+        setGameStarted,
+        lastGameResult,
+        setLastGameResult,
+      }}
     >
       {children}
     </GameSettingsContext.Provider>
