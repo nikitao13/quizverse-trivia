@@ -29,6 +29,8 @@ export interface GameSettingsContextProps {
   setGameStarted: (started: boolean) => void;
   lastGameResult: Results | null;
   setLastGameResult: (result: Results) => void;
+  gameOver: boolean;
+  setGameOver: (value: boolean) => void;
 }
 
 const defaultSettings: GameSettings = {
@@ -44,4 +46,6 @@ export const GameSettingsContext = createContext<GameSettingsContextProps>({
   setGameStarted: () => {},
   lastGameResult: null,
   setLastGameResult: () => {},
+  gameOver: false,
+  setGameOver: () => {},
 });

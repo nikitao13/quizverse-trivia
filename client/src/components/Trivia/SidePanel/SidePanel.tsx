@@ -1,44 +1,64 @@
 import { useContext } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { GameSettingsContext } from '../../../context/GameSettingsContext';
 import Leaderboard from '../Leaderboard/Leaderboard';
 import classes from './SidePanel.module.scss';
 import { IoMdSettings } from 'react-icons/io';
 
 const SidePanel = () => {
-  const { gameSettings, setGameSettings, gameStarted, setGameStarted } =
-    useContext(GameSettingsContext);
+  const {
+    gameSettings,
+    setGameSettings,
+    gameStarted,
+    setGameStarted,
+    gameOver,
+    setGameOver,
+  } = useContext(GameSettingsContext);
+  const queryClient = useQueryClient();
 
-  const isReady = gameSettings.difficulty && gameSettings.category;
+  const isReady = Boolean(gameSettings.difficulty && gameSettings.category);
+
+  const handleStart = () => {
+    queryClient.removeQueries({
+      queryKey: ['trivia', gameSettings.difficulty, gameSettings.category],
+      exact: true,
+    });
+
+    setGameOver(false);
+    setGameStarted(true);
+  };
 
   return (
     <aside className={classes.sidePanel}>
       <Leaderboard />
+
       <div className={classes.settingsHeader}>
         <p>game settings</p>
         <IoMdSettings className={classes.settingsLogo} />
       </div>
 
       <input
-        disabled={gameStarted}
+        disabled={gameStarted && !gameOver}
         type="text"
         placeholder="username"
         className={classes.input}
         value={gameSettings.username}
         onChange={(e) => {
-          const inputValue = e.target.value;
-          const newUsername =
-            inputValue.length > 13 ? inputValue.slice(0, 13) : inputValue;
-          setGameSettings({ ...gameSettings, username: newUsername });
+          const input = e.target.value.slice(0, 13);
+          setGameSettings({ ...gameSettings, username: input });
         }}
       />
 
       <div className={classes.categories}>
         <p>category</p>
         <select
-          disabled={gameStarted}
+          disabled={gameStarted && !gameOver}
           value={gameSettings.category}
           onChange={(e) =>
-            setGameSettings({ ...gameSettings, category: e.target.value })
+            setGameSettings({
+              ...gameSettings,
+              category: e.target.value,
+            })
           }
         >
           <option disabled value="">
@@ -56,33 +76,21 @@ const SidePanel = () => {
 
       <div className={classes.difficultyButtons}>
         <p>difficulty</p>
-        <button
-          disabled={gameStarted}
-          className={gameSettings.difficulty === 'easy' ? classes.active : ''}
-          onClick={() =>
-            setGameSettings({ ...gameSettings, difficulty: 'easy' })
-          }
-        >
-          easy
-        </button>
-        <button
-          disabled={gameStarted}
-          className={gameSettings.difficulty === 'medium' ? classes.active : ''}
-          onClick={() =>
-            setGameSettings({ ...gameSettings, difficulty: 'medium' })
-          }
-        >
-          medium
-        </button>
-        <button
-          disabled={gameStarted}
-          className={gameSettings.difficulty === 'hard' ? classes.active : ''}
-          onClick={() =>
-            setGameSettings({ ...gameSettings, difficulty: 'hard' })
-          }
-        >
-          hard
-        </button>
+        {(['easy', 'medium', 'hard'] as const).map((level) => (
+          <button
+            key={level}
+            disabled={gameStarted && !gameOver}
+            className={gameSettings.difficulty === level ? classes.active : ''}
+            onClick={() =>
+              setGameSettings({
+                ...gameSettings,
+                difficulty: level,
+              })
+            }
+          >
+            {level}
+          </button>
+        ))}
         <p className={classes.pointsMsg}>
           earn more points with higher difficulty!
         </p>
@@ -91,7 +99,7 @@ const SidePanel = () => {
       <button
         className={classes.start}
         disabled={!isReady}
-        onClick={() => setGameStarted(true)}
+        onClick={handleStart}
       >
         start
       </button>

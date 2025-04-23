@@ -25,6 +25,7 @@ export const GameSettingsProvider = ({
 
   const [gameStarted, setGameStarted] = useState(false);
   const [lastGameResult, setLastGameResult] = useState<Results | null>(null);
+  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     localStorage.setItem('gameSettings', JSON.stringify(gameSettings));
@@ -39,6 +40,8 @@ export const GameSettingsProvider = ({
         setGameStarted,
         lastGameResult,
         setLastGameResult,
+        gameOver,
+        setGameOver,
       }}
     >
       {children}

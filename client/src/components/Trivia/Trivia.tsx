@@ -5,12 +5,12 @@ import SidePanel from './SidePanel/SidePanel';
 import { GameSettingsContext } from '../../context/GameSettingsContext';
 
 const Trivia = () => {
-  const { gameStarted } = useContext(GameSettingsContext);
+  const { gameStarted, gameOver } = useContext(GameSettingsContext);
   return (
     <main className={classes.main}>
       <SidePanel />
       <section className={classes.gameContainer}>
-        {gameStarted && <GamePanel />}
+        {(gameStarted || gameOver) && <GamePanel />}
       </section>
     </main>
   );
